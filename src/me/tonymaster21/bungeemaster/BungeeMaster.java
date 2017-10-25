@@ -17,12 +17,14 @@ public class BungeeMaster extends JavaPlugin {
     public void onEnable(){
         getLogger().info("For help with BungeeMaster, please visit https://bungeemaster.tonymaster21.me");
         if (Bukkit.getPluginManager().getPlugin("Skript") == null) {
-            getLogger().info("Skript is not installed on your server. This plugin will not work!");
+            getLogger().error("Skript is not installed on your server. This plugin will not work!.");
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
         if (Bukkit.getPluginManager().getPlugin("BungeeBridgeC") == null) {
-            getLogger().info("BungeeBridgeClient is not installed on your server. This plugin will not work!");
+            getLogger().error("BungeeBridgeClient is not installed on your server. This plugin will not work!");
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
-        if (Bukkit.getPluginManager().getPlugin("Skript") != null) {
+        if (Bukkit.getPluginManager().getPlugin("Skript") != null && Bukkit.getPluginManager().getPlugin("BungeeBridgeC") != null) {
             Skript.registerAddon(this);
             // Effects
             Skript.registerEffect(EffChat.class, "send (bm|bungeemaster) chat[ message] %string% from %string%");
@@ -39,7 +41,6 @@ public class BungeeMaster extends JavaPlugin {
             Skript.registerExpression(ExprGetPlayerName.class, String.class, ExpressionType.SIMPLE, "[the ](bm|bungeemaster) player with [the ]uuid [of ]%string%");
             Skript.registerExpression(ExprGetPlayersGlobal.class, String.class, ExpressionType.SIMPLE, "all [online ](bm|bungeemaster) players");
             Skript.registerExpression(ExprGetPlayerUUID.class, String.class, ExpressionType.SIMPLE, "[the ](bm|bungeemaster) uuid of %player%");
-
         }
     }
 
